@@ -1,10 +1,12 @@
 package com.example.jobPlateForm.entity;
 
-import java.util.List;
-
-import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,18 +14,15 @@ import lombok.Setter;
 @Getter
 @Entity
 public class User {
-	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int userId;
-	private String name;
+	@Column(unique = true, nullable = false)
 	private String email;
+	private long mobileNumber;
+	@Column(nullable = false)
 	private String password;
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<Address>address;
-	private String adhharNumber;
-	private String panNumber;
-	private int experiance;
-	
-
-	
+	@Enumerated(EnumType.STRING)
+	private String role;
 
 }
