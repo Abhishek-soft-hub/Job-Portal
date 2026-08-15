@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void createUser(UserDto userDto) {
 		if (userRepository.existsByEmail(userDto.getEmail())
-				&& userRepository.existsByMobileNumber(userDto.getMobileNumber())) {
+				|| userRepository.existsByMobileNumber(userDto.getMobileNumber())) {
 			throw new UserServiceException("User Alredy Register", HttpStatus.FOUND);
 		}
 		User user = new User();
@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void deleteUser(int id) {
 		if (!userRepository.existsById(id)) {
-			throw new UserServiceException("User is not found", HttpStatus.FOUND);
+			throw new UserServiceException("User is not found", HttpStatus.NOT_FOUND);
 		}
 		userRepository.deleteById(id);
 
@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void updateUser(int id, User user) {
 		
-		User existUser = userRepository.findById(id).orElseThrow(() -> new UserServiceException("User is not found", HttpStatus.FOUND));
+		User existUser = userRepository.findById(id).orElseThrow(() -> new UserServiceException("User is not found", HttpStatus.NOT_FOUND));
 		existUser.setEmail(user.getEmail());
 		existUser.setMobileNumber(user.getMobileNumber());
 		existUser.setPassword(user.getPassword());
@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getUser(int id) {
 		if (!userRepository.existsById(id)) {
-			throw new UserServiceException("User is not found", HttpStatus.FOUND);
+			throw new UserServiceException("User is not found", HttpStatus.NOT_FOUND);
 		}
 		return userRepository.findById(id).get();
 	}
@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<User> getAllUser() {
 		if (userRepository.findAll().isEmpty()) {
-			throw new UserServiceException("Users is not found", HttpStatus.FOUND);
+			throw new UserServiceException("Users is not found", HttpStatus.NOT_FOUND);
 		}
 		return userRepository.findAll();
 	}
