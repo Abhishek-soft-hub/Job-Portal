@@ -9,7 +9,8 @@ public interface UserService {
 
 	public void createUser(UserDto userDto);
 	public void deleteUser(int id);
-	public void updateUser(int id, User user);
+	public void updateUser(int id, UserDto userDto);
+	public void UpdateCredential(int id, User user);
 	public User getUser(int id);
 	public List<User> getAllUser();
 	

@@ -22,7 +22,7 @@ public class Address {
 	private String area;
 	private int pincode;
 	@ManyToOne()
-	@JoinColumn(name = "profile_id")
-	private ProfileUser profileUser;
+	@JoinColumn(name = "User_Id")
+	private User user;
 	
 }

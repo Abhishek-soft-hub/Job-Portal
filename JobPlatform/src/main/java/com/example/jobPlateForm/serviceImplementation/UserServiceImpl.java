@@ -46,14 +46,20 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void updateUser(int id, User user) {
-		
-		User existUser = userRepository.findById(id).orElseThrow(() -> new UserServiceException("User is not found", HttpStatus.NOT_FOUND));
-		existUser.setEmail(user.getEmail());
-		existUser.setMobileNumber(user.getMobileNumber());
-		existUser.setPassword(user.getPassword());
-		existUser.setRole(user.getRole());
-		
+	public void updateUser(int id, UserDto userDto) {
+
+		User existUser = userRepository.findById(id)
+				.orElseThrow(() -> new UserServiceException("User is not found", HttpStatus.NOT_FOUND));
+		existUser.setMobileNumber(userDto.getMobileNumber());
+				existUser.setRole(userDto.getRole());
+		existUser.setExperiance(userDto.getExperiance());
+		existUser.setFirst_Name(userDto.getFirst_Name());
+		existUser.setLast_Name(userDto.getLast_Name());
+		existUser.setMiddle_Name(userDto.getMiddle_Name());
+	
+		existUser.setSkills(userDto.getSkills());
+		existUser.setAddress(userDto.getAddress());
+
 		userRepository.save(existUser);
 	}
 
@@ -71,6 +77,18 @@ public class UserServiceImpl implements UserService {
 			throw new UserServiceException("Users is not found", HttpStatus.NOT_FOUND);
 		}
 		return userRepository.findAll();
+	}
+
+	@Override
+	public void UpdateCredential(int id, User user) {
+		User existUser = userRepository.findById(id)
+				.orElseThrow(() -> new UserServiceException("User is not found", HttpStatus.NOT_FOUND));
+		existUser.setEmail(user.getEmail());
+		existUser.setMobileNumber(user.getMobileNumber());
+		existUser.setPassword(user.getPassword());
+		existUser.setRole(user.getRole());
+		userRepository.save(existUser);
+
 	}
 
 }
